@@ -58,18 +58,18 @@ class Ui_BestMusicThing(object):
         self.TransMusicPathButton = QtWidgets.QPushButton(self.centralwidget)
         self.TransMusicPathButton.setGeometry(QtCore.QRect(10, 70, 111, 23))
         self.TransMusicPathButton.setObjectName("TransMusicPathButton")
-        self.ChadMusicPath_2 = QtWidgets.QLabel(self.centralwidget)
-        self.ChadMusicPath_2.setGeometry(QtCore.QRect(130, 70, 531, 20))
-        self.ChadMusicPath_2.setObjectName("ChadMusicPath_2")
-        self.ChadMusicPath_3 = QtWidgets.QLabel(self.centralwidget)
-        self.ChadMusicPath_3.setGeometry(QtCore.QRect(130, 100, 531, 20))
-        self.ChadMusicPath_3.setObjectName("ChadMusicPath_3")
-        self.TransMusicPathButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.TransMusicPathButton_2.setGeometry(QtCore.QRect(10, 100, 111, 23))
-        self.TransMusicPathButton_2.setObjectName("TransMusicPathButton_2")
-        self.MakeChadLoudButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.MakeChadLoudButton_2.setGeometry(QtCore.QRect(470, 310, 191, 91))
-        self.MakeChadLoudButton_2.setObjectName("MakeChadLoudButton_2")
+        self.TransMusicPath = QtWidgets.QLabel(self.centralwidget)
+        self.TransMusicPath.setGeometry(QtCore.QRect(130, 70, 531, 20))
+        self.TransMusicPath.setObjectName("TransMusicPath")
+        self.NonCombatMusicPath = QtWidgets.QLabel(self.centralwidget)
+        self.NonCombatMusicPath.setGeometry(QtCore.QRect(130, 100, 531, 20))
+        self.NonCombatMusicPath.setObjectName("NonCombatMusicPath")
+        self.NonCombatMusicPathButton = QtWidgets.QPushButton(self.centralwidget)
+        self.NonCombatMusicPathButton.setGeometry(QtCore.QRect(10, 100, 111, 23))
+        self.NonCombatMusicPathButton.setObjectName("NonCombatMusicPathButton")
+        self.MakeNonCombatLoudButton = QtWidgets.QPushButton(self.centralwidget)
+        self.MakeNonCombatLoudButton.setGeometry(QtCore.QRect(470, 310, 191, 91))
+        self.MakeNonCombatLoudButton.setObjectName("MakeNonCombatLoudButton")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(30, 150, 381, 271))
         font = QtGui.QFont()
@@ -102,9 +102,9 @@ class Ui_BestMusicThing(object):
         self.StopMusicButton.clicked.connect(self.stopMusic)
         self.MakeChadLoudButton.clicked.connect(self.switchToChad)
         self.MakePlebLoudButton.clicked.connect(self.switchToPleb)
-        self.MakeChadLoudButton_2.clicked.connect(self.switchToNonCombat)
+        self.MakeNonCombatLoudButton.clicked.connect(self.switchToNonCombat)
         self.TransMusicPathButton.clicked.connect(self.getTransitionFile)
-        self.TransMusicPathButton_2.clicked.connect(self.getNoCombatFile)
+        self.NonCombatMusicPathButton.clicked.connect(self.getNoCombatFile)
         pygame.mixer.init()
         pygame.init()
 
@@ -133,10 +133,10 @@ class Ui_BestMusicThing(object):
         self.PlebMusicPath.setText(_translate("BestMusicThing", "TextLabel"))
         self.ChadMusicPath.setText(_translate("BestMusicThing", "TextLabel"))
         self.TransMusicPathButton.setText(_translate("BestMusicThing", "Combat Transition File"))
-        self.ChadMusicPath_2.setText(_translate("BestMusicThing", "TextLabel"))
-        self.ChadMusicPath_3.setText(_translate("BestMusicThing", "TextLabel"))
-        self.TransMusicPathButton_2.setText(_translate("BestMusicThing", "Non-Combat Music"))
-        self.MakeChadLoudButton_2.setText(_translate("BestMusicThing", "Switch to non-combat music"))
+        self.TransMusicPath.setText(_translate("BestMusicThing", "TextLabel"))
+        self.NonCombatMusicPath.setText(_translate("BestMusicThing", "TextLabel"))
+        self.NonCombatMusicPathButton.setText(_translate("BestMusicThing", "Non-Combat Music"))
+        self.MakeNonCombatLoudButton.setText(_translate("BestMusicThing", "Switch to non-combat music"))
         self.label.setText(_translate("BestMusicThing", ""))
 
     def getPlebFile(self):
@@ -146,14 +146,14 @@ class Ui_BestMusicThing(object):
         self.ChadMusicPath.setText(QFileDialog.getOpenFileName(caption='select chad music')[0])
 
     def getTransitionFile(self):
-        self.ChadMusicPath_2.setText(QFileDialog.getOpenFileName(caption='select transition music')[0])
+        self.TransMusicPath.setText(QFileDialog.getOpenFileName(caption='select transition music')[0])
 
     def getNoCombatFile(self):
-        self.ChadMusicPath_3.setText(QFileDialog.getOpenFileName(caption='select non-combat music')[0])
+        self.NonCombatMusicPath.setText(QFileDialog.getOpenFileName(caption='select non-combat music')[0])
 
     def startMusic(self):
         self.playing = True
-        if self.PlebMusicPath.text() != 'TextLabel' and self.ChadMusicPath.text() != 'TextLabel' and self.ChadMusicPath_3.text() != 'TextLabel':
+        if self.PlebMusicPath.text() != 'TextLabel' and self.ChadMusicPath.text() != 'TextLabel' and self.NonCombatMusicPath.text() != 'TextLabel':
             if self.ChadSound is not None:
                 self.ChadSound.stop()
             if self.PlebSound is not None:
@@ -162,8 +162,8 @@ class Ui_BestMusicThing(object):
             self.movie.start()
             self.PlebSound = pygame.mixer.Sound(self.PlebMusicPath.text())
             self.ChadSound = pygame.mixer.Sound(self.ChadMusicPath.text())
-            self.TransSound = pygame.mixer.Sound(self.ChadMusicPath_2.text())
-            self.NonCombatSound = pygame.mixer.Sound(self.ChadMusicPath_3.text())
+            self.TransSound = pygame.mixer.Sound(self.TransMusicPath.text())
+            self.NonCombatSound = pygame.mixer.Sound(self.NonCombatMusicPath.text())
             self.PlebSound.play(loops=-1, fade_ms=500)
             self.ChadSound.play(loops=-1, fade_ms=500)
             self.NonCombatSound.play(loops=-1, fade_ms=500)
@@ -261,6 +261,7 @@ class Ui_BestMusicThing(object):
                 time.sleep(0.0005)
 
     def infectPetersComputerWithVirus(self):
+        # Shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
         if self.onPetersComputer:
             deploy_aids = True
             much_sneak = True
