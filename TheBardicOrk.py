@@ -121,6 +121,7 @@ class Ui_BestMusicThing(object):
         self.nonCombatVolume = 1
 
 
+
     def retranslateUi(self, BestMusicThing):
         _translate = QtCore.QCoreApplication.translate
         BestMusicThing.setWindowTitle(_translate("BestMusicThing", "BestMusicThing"))
